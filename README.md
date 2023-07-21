@@ -9,7 +9,8 @@
 - Introduction to Programming
 - Introduction to Computer Science
 - How to Code - Simple Data
+- How to Code - Complex Data
 
 ## Currently Studying
+- Programming Languages, Part A
 
-- How to Code - Complex Data
