@@ -1,2 +1,3 @@
 **/*.bak
 ./remove_bak_files_script.bat
+3-PLA/*.pdf
