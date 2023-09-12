@@ -1,0 +1,228 @@
+﻿			( 1 )
+
+( d ) similar_names
+
+Input -> string string list
+Output -> string list
+
+* It takes a list of subs and returns a list of records in which the original firstName is replaced with every string returned from get_subs
+
+
+* How?
+
+
+* Pass the input list to get_subs.
+* Loop over the returned list.
+* Replace the first name of the input full name with the element from the returned list.
+* Add it to rsf.
+* If the loop is over, return rsf.
+
+-------------------------------------------------
+
+			( 2 )
+
+card  -> (suit * rank)
+suit  -> Spade | Club | Heart | Diamond
+rank  -> queen | jack | king | ace | 2-10
+
+-------------------------------------------------
+
+( a ) card_color
+
+
+Input -> card
+Output -> color
+(spades and clubs are black, diamonds and hearts are red)
+One case-expression is enough
+
+
+* How?
+
+
+* if card is Spades or clubs then return Black
+* else return Red
+
+
+-------------------------------------------------
+
+( b ) card_value
+
+
+Input -> card
+Output -> value (int)
+(value is the rank part, ace is 11, num has their int values, everything else is 10)
+One case-expression is enough. 
+
+
+
+
+* How?
+
+
+* case card of rank
+* If it’s Num then return it
+* else if it’s Ace then return 11
+* else return 10
+
+-------------------------------------------------
+
+( c ) remove_card
+
+
+Input -> card list (cs) , card ( c ) , exception ( e )
+Output -> card list
+
+
+* returns a given list without the given card, if not in it raises the given error.
+
+
+* How?
+
+
+fun helper 
+rsf 
+* use rsf to add results
+* case list of
+* [ ] => raise the given error
+* card :: list => if card = given card
+                  then rsf @ list
+                  else call helper with card :: rsf
+
+-------------------------------------------------
+
+( d ) all_same_color
+
+Input -> card list
+output -> boolean
+
+* takes a list of cards and returns true if all the cards in the
+list are the same color.
+
+* How?
+
+case card_list of
+  [] => true
+  | card :: [] => true
+  | x :: y :: card_list =>
+    if card_color(x) = card_color(y)
+    then all_same_color(y::card_s)
+    else false
+
+-------------------------------------------------
+
+( e ) sum_cards
+
+*  Write a function sum_cards, which takes a list of cards and returns the sum of their values. Use a locally defined helper function that is tail recursive.
+
+Input -> card list
+Output -> Int
+
+* How? 
+
+- helper (cards, rsf)
+case card_s of
+[] => rsf
+| x :: [] => card_value x
+| x :: card_s => helper ( card_s, card_value(x) + rsf) 
+
+-------------------------------------------------
+
+( f ) score
+
+Input -> card_list, int
+Output -> int
+
+* RULES:
+
+  if sum > goal -> preliminary_score = 3 * (sum−goal)
+  else preliminary_score = (goal − sum)
+
+  if all_same_color -> score = preliminary_score div 2
+
+
+* Write a function score, which takes a card list (the held-cards) and an int (the goal) and computes the score as described above.
+
+* How?
+
+- get the sum of card_list using sum_cards
+- all_same_color ? p_score div 2 (compute p_score first)
+- case cards_sum of
+  0 => 0
+  | _ => 
+  if sum > goal -> p_score = 3 * (sum - goal)
+  else -> p_score = goal - sum
+
+-------------------------------------------------
+
+( g ) officiate
+
+Input -> card_list , move_list, goal (int)
+Output -> score (int)
+
+* RULES:
+  game starts -> hand_held  = []
+
+  game ends   -> moves_list = []
+
+  discard card -> if card in hand_held -> hand_held without card , card_list unchanged
+                  else raise IllegalMove
+
+  draw card -> if card_list = [] -> game_over
+               else if sum of hand_held (will be) > goal -> game_over *after drawing
+               else play with -> larger hand_held and smaller card_list
+
+
+
+-- the game continues if there are moves in moves_list
+
+-- it stops if the move is draw and the score + the value of drawed card > goal
+
+-- maybe card_list is empty but all the remaining moves are discard not draw so the game continues
+
+
+	       
+* How?
+
+- helper ( card_list, move_list, rsf (hand_held) )
+
+case move_list of
+[] => calc_score
+move::moves => 
+Discard card => remove card from hand_held
+| Draw =>
+	case card_list of
+	[] => calc_score
+	| card::card_s =>
+	if card_value + sum_hand_held > goal
+	then calc_score for hand_held + card_value
+	else continue by - adding the card to hand_held 
+			 - removing it from card_list
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
