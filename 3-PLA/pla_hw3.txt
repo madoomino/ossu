@@ -1,0 +1,164 @@
+( 1 ) only_capitals
+
+Input -> string list
+Output -> string list
+
+* returns a new list having only capitalized strings from the original list.
+
+How?
+
+(List.filter) use it to filter the result coming from -> (Char.isUpper) use it to return a boolean if the given char is upperCase, this char comes from -> (String.sub) which takes a srting and returns a substring from a start index to end.
+
+fun only_capitals str_lst =
+List.filter (fn str => Char.isUpper(String.sub(str,0)) str_lst
+
+
+------------------------------------
+
+( 2 ) longest_string1
+
+Input -> string list
+Output -> string
+
+* returns the longest string in the list, obv :|
+- if tie, return the closest to (start)
+
+How?
+
+fun longest_string1 =
+ foldl (fn (str,acc) => if  String.size str > String.size acc
+ then str else acc) "" str_lst
+
+------------------------------------
+
+( 3 ) longest_string2
+
+Input -> string list
+Output -> string
+
+* returns the longest string in the list, obv :|
+- if tie, return the closest to (end)
+
+How?
+
+fun longest_string1 =
+ foldl (fn (str,acc) => if  String.size str > String.size acc
+ then str else acc) "" str_lst
+
+------------------------------------
+
+( 4 ) longest_string_helper , longest_string3 , longest_string4
+
+
+- helper
+
+Input -> fn , string list
+Output -> string
+
+How?
+
+fun helper f str_lst =
+ foldl f "" str_lst
+
+
+- lngst_str3 
+
+Input -> string list
+Output -> string
+
+How?
+
+call helper with lngst_str1 fn
+
+
+- lngst_str4
+
+Input -> string list
+Output -> string
+
+How?
+
+call helper with lngst_str2 fn
+
+
+* (lngst_str3 & lngst_str4) are values returned from calling helper without the list, so they are using "currying" to be called later with the list the produce the values.
+
+------------------------------------
+
+( 5 ) longest_capitalized
+
+Input -> string list
+Output -> string
+
+* returns the longest string that starts with a capital letter, obv :|
+
+How?
+
+- filter first -> capitalized strs
+- then use foldl -> longest str
+
+so something like 
+foldl fn "" (filter fn list)
+
+fun longest_capitalized str_lst =
+ List.foldl lngst_str1_fn "" (List.filter only_capitals_fn str_lst)
+
+this simplifies to:
+
+fun longest_capitalized str_lst =
+ longest_string3 (only_capitals str_lst)
+
+
+------------------------------------
+
+( 6 ) rev_string
+
+Input -> string
+Output -> string
+
+* reverses a string, obvvv :|
+
+How?
+
+- convert string to list -> String.explode
+- reverse the list -> List.rev 
+- convert list to string -> String.implode
+
+String.implode (List.rev (String.explode s))
+
+-----------------------------------
+
+( 7 ) first_answer
+
+Input -> 'a list
+Output -> 'a
+
+* returns the first answer that matches a condition f, if none raise NoAnswer
+
+How?
+
+use filter to get all matching then return first element of this list.
+
+fun first_answer f lst =
+    let val filterd = List.filter f lst
+    in 
+        case filterd of
+            [] => raise NoAnswer
+            | x::_ => x 
+    end
+
+------------------------------------
+
+( 8 ) all_answers
+
+Input -> fn, lst
+Output -> bool
+
+* returns true if fn applies to all elements in lst
+
+How?
+
+fun all_answers f lst =
+ case lst of
+ [] => true
+ | x::xs => (f x) andalso (all_answers f xs)
