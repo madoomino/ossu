@@ -1,0 +1,177 @@
+( 1 ) sequence
+
+Input -> low , high , stride
+Output-> list
+
+* returns a list from low to high (inclusive) seperated by stride.
+
+How?
+
+if low + stride > high -> stop
+else add it to the final list
+
+-----------------------------------
+
+( 2 ) string-append-map
+
+Input -> list , string
+Output-> list
+
+* returns a list of strings in which every string = suffix + string.
+
+How?
+
+
+(define (string-append-map lst suffix)
+  (map (lambda (x) (string-append x suffix)) lst))
+
+-----------------------------------
+
+( 3 ) list-nth-mod
+
+Input -> list , number
+Output-> list element
+
+* returns the remainder of (given number / list lenght)th element, if not found return error, if given number is negative return error.
+
+How?
+
+check is number negative -> err: negative number.
+
+check if list empty (and in the recursive case) -> err: empty list.
+
+use a counter (tail-recursive function) and if the counter matches the remainder return the element in that position.
+
+* list-tail is the exact helper for doing that, no need to write a beautiful tail-recursive function on my own :"(
+
+other way -> mutation, not allowed in the assignment.
+
+-----------------------------------
+
+( 4 ) stream-for-n-steps
+
+Input -> stream , number
+Output-> list
+
+* returns returns a list holdingthe first n values produced by s in order.
+
+How?
+
+recursive helper with a counter 
+if the counter == given number return the list
+else add the element to the list, counter += 1
+
+
+-----------------------------------
+
+( 5 ) funny-number-stream
+
+Input -> ...
+Output-> stream (pair of value and a function that produces the value called it). (hard to understand? study the course :|)
+
+* produces a stream of natural numbers, numbers divisble by 5 are negated.
+
+How?
+
+recursive function that returns the pair, if (car pair) is divisble by 5, return it negated, (cdr pair) is the function it self with (+ (car pair) 1)... helper function is the way to go.
+
+-----------------------------------
+
+( 6 ) dan-then-dog
+
+Input -> ...
+Output-> stream
+
+* stream produces "dan.jpg" then "dog.jpg" ...
+
+How?
+
+function that has a helper function with num i = 0
+if i = 0 -> pair of "dan.jpg" , same fun with i = 1
+if i = 1 -> pair of "dog.jpg" , same fun with i = 0
+
+----------------------------------
+
+( 7 ) stream-add-zero
+
+Input -> stream
+Output-> stream
+
+* takes a stream and returns a pair of 0 and the result of calling the stream.
+
+
+How? 
+
+
+create a stream that takes a stream s, and returns a pair of (0 . (car s))
+local function takes the stream with every recursive call, returns (car s) and calls itself with (cdr s) as the next stream.
+
+-----------------------------------
+
+( 8 ) cycle-lists
+
+Input -> list , list
+Output-> stream
+
+* returns a stream that produces a pair of (car xs . car ys) forever.
+
+
+How?
+
+
+recursive functions that checks if xs is null, it starts from xs again, if ys is null is starts from ys again... etc.
+
+
+if null? xs -> call it with xs, with the same ys position
+else -> if null? ys -> call it with the same xs position, ys
+
+-----------------------------------
+
+( 9 ) vector-assoc
+
+Input -> value , vector (array in normal programming languages).
+Output-> boolean or pair (it depends).
+
+* return false if no pair with first element equals given value, else return the pair.
+
+
+How?
+
+if null vector -> #f
+else -> 
+	if pair? 1st element -> if car = v return 1st element
+	else -> continue
+
+* I used a built-in function "vector-take-right" (awesome name btw) which gives me a new version of vector starting from the given index to the end of the vector ( like vector[1:] , vector.slice(1) , whatever :? )
+
+* Another way of doing it is by implementing a recursive fn that processes one element at a time. with a counter for the tracking the index. it would be a better-time-complexity solution, but I'm too lazy to implement it :)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
