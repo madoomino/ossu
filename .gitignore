@@ -1,3 +1,4 @@
 **/*.bak
 ./remove_bak_files_script.bat
 3-PLA/*.pdf
+5-PLC/*.pdf
